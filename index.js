@@ -9,7 +9,7 @@ app.use(express.json());
 
 const EMAIL = process.env.EMAIL;
 
-// ================= HELPERS =================
+
 
 function fibonacci(n) {
   if (typeof n !== "number" || n < 0) throw "Invalid";
@@ -38,7 +38,7 @@ function lcm(arr) {
   return arr.reduce((a, b) => lcm2(a, b));
 }
 
-// ================= HEALTH =================
+
 
 app.get("/health", (req, res) => {
   res.status(200).json({
@@ -47,7 +47,7 @@ app.get("/health", (req, res) => {
   });
 });
 
-// ================= BFHL =================
+
 
 app.post("/bfhl", async (req, res) => {
   try {
@@ -89,10 +89,10 @@ app.post("/bfhl", async (req, res) => {
       });
     }
 
-    // ===== AI (Gemini attempt + safe fallback) =====
+    
     if (body.AI) {
       try {
-        // Attempt Gemini (integration requirement)
+        
         await axios.post(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_KEY}`,
           {
@@ -100,10 +100,10 @@ app.post("/bfhl", async (req, res) => {
           }
         );
       } catch (err) {
-        // Ignore Gemini failure completely
+        
       }
 
-      // Deterministic single-word fallback
+      
       let answer = "Answer";
       const q = body.AI.toLowerCase();
 
